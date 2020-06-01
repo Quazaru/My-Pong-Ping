@@ -141,6 +141,7 @@ const draw = () => {
     drawPaddle();              //рисуем ракетку
     drawBricks();
     drawCounter();
+    
 
     //Условия для отскока от стен
     if(x + moveX > canvas.width-radius || x + moveX < radius) {
@@ -200,14 +201,23 @@ const drawBricks = () => {
 
 
 
-
+canvas.addEventListener("mousemove", mouseMoveHandler,)
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
 restartBtn.addEventListener('click', () => {
     document.location.reload();
 })
+function mouseMoveHandler(e){
+    
+    let relativeX = e.clientX - canvas.offsetLeft - paddleWidth/2;
 
+    console.log(canvas.offsetLeft);
+    if(relativeX > 0 && relativeX < canvas.width ){
+        paddleX = relativeX;
+       
+    }
+}
 function keyDownHandler(e) {
     if(e.keyCode == 39) {    
         rightPressed = true;
