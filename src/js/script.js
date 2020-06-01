@@ -1,4 +1,9 @@
 import '../css/styles.scss';
+const restartBtn = document.querySelector('.restart');
+
+
+
+
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
@@ -90,13 +95,14 @@ const drawEndGameScreen = () =>{
     ctx.font = "50px poppins";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "#A0000F"; 
+    ctx.fillStyle = "#BF3030"; 
     ctx.fillText("You Died",  +(canvas.width / 2)  , +(canvas.height/2));
     ctx.font = '20px poppins'
-    ctx.fillStyle = "orange";
+    ctx.fillStyle = "#fff";
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
     clearInterval(interval);
+    restartBtn.style.display = 'block';
 
 }
 const drawWinScreen = () =>{
@@ -113,8 +119,19 @@ const drawWinScreen = () =>{
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
     clearInterval(interval);
+    restartBtn.style.display = 'block';
+    restartBtn.style.backgroundColor = '#FFE773';
+    restartBtn.style.color = '#000';
+    restartBtn.style.fontWeight = '700'
 }
+const drawCounter = () => {
+    ctx.beginPath();
+    ctx.font = '20px poppins'
+    ctx.fillStyle = 'black';
+    ctx.fillText(`Score: ${counter}`,  10  , +(canvas.height - 20 ));
+    ctx.closePath();
 
+}
 
 const draw = () => {
     ctx.clearRect(0,0, canvas.width, canvas.height);
@@ -123,7 +140,8 @@ const draw = () => {
     drawCircumference(radius, ballCurrentColor); // рисуем шар
     drawPaddle();              //рисуем ракетку
     drawBricks();
-    
+    drawCounter();
+
     //Условия для отскока от стен
     if(x + moveX > canvas.width-radius || x + moveX < radius) {
         moveX = -moveX;
@@ -185,6 +203,11 @@ const drawBricks = () => {
 
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
+
+restartBtn.addEventListener('click', () => {
+    document.location.reload();
+})
+
 function keyDownHandler(e) {
     if(e.keyCode == 39) {    
         rightPressed = true;

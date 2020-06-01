@@ -1,12 +1,34 @@
-        * { 
-            padding: 0;
-             margin: 0; 
-        }
-        canvas{
-            border: 1px solid #000;
-            background: #eee;
-            display: block;
-            margin: 0 auto; 
-            color: rgb(170, 91, 1);
-        }
+* { 
+    padding: 0;
+    margin: 0; 
+    }
+canvas{
+    border: 1px solid #000;
+    background: #eee;
+    display: block;
+    margin: 0 auto; 
+    color: rgb(170, 91, 1);
+    }
+.restart{
+    display: none;
+    transition: 0.5s;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    padding: 10px 30px;
+    background-color: #BF3030;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin: 0 auto;
+    cursor: pointer;
+    
+}
+.restart:hover{
+    transition: 0.3s;
+    background-color: rgb(226, 58, 58);
+    padding: 10px 45px;
+}
     
