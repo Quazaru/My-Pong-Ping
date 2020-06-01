@@ -2,7 +2,8 @@ import '../css/styles.scss';
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
-
+let ballCurrentColor = '#fff';
+let ballUnlockColors = ['#FFC373',  '#FFDC40', '#FF9200'  ];
 let radius = 10;
 let x = 0 + radius;     //Координаты для шара
 let y = canvas.height/2;    
@@ -13,7 +14,7 @@ let moveY = -3;
 let spriteWidth = 30;   //Ширина текстуры
 let spriteHeight = 30;  //Высота текстуры
 
-let interval = setInterval( draw, 15 );
+
 
 let rightPressed = false;
 let leftPressed = false;
@@ -37,8 +38,15 @@ let bricks = [];
 for(var c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
     for(var r=0; r<brickRowCount; r++) {
-        bricks[c][r] = { x: 0, y: 0 };
+        bricks[c][r] = { x: 0, y: 0, exist: true};
     }
+}
+
+const getRandElem = (arr) =>{
+    let rand = Math.floor(Math.random() * arr.length);
+    
+    return arr[rand];
+
 }
 
 const drawRect = (rectX, rectY, rectWidth, rectHeight, style, color) => {
@@ -58,10 +66,9 @@ const drawRect = (rectX, rectY, rectWidth, rectHeight, style, color) => {
 
 }
 
-const drawCircumference = (r) =>{
+const drawCircumference = (r, color) =>{
     ctx.beginPath();
-    ctx.fillStyle = '#fff';
-
+    ctx.fillStyle = color; 
     ctx.strokeStyle = 'black';
     ctx.arc(x, y, r, 0 , Math.PI*2);
     ctx.fill();
@@ -89,14 +96,18 @@ const drawEndGameScreen = () =>{
     ctx.fillStyle = "orange";
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
+    clearInterval(interval)
 
 }
 
 const draw = () => {
     ctx.clearRect(0,0, canvas.width, canvas.height);
-    drawBricks();
-    drawCircumference(radius); // рисуем шар
+    collisionDetection();
+    console.log(ballCurrentColor);
+    drawCircumference(radius, ballCurrentColor); // рисуем шар
     drawPaddle();              //рисуем ракетку
+    drawBricks();
+
     //Условия для отскока от стен
     if(x + moveX > canvas.width-radius || x + moveX < radius) {
         moveX = -moveX;
@@ -106,12 +117,12 @@ const draw = () => {
     } else if(y  > canvas.height-radius) {
         if(x > paddleX  && x  < paddleX + paddleWidth + radius ) {
             moveY = -moveY;
-            counter+=10;
+            counter+=1;
         }
         else {
             drawEndGameScreen();
             moveY = moveX = 0;
-            clearInterval(setInterval(draw, 15 ));
+            
            
 
         }
@@ -129,21 +140,23 @@ const draw = () => {
     
     
 }
+
 const drawBricks = () => {
-
-
     for(let c=0; c<brickColumnCount; c++) {
-        let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+        
         for(let r=0; r<brickRowCount; r++) {
             
-            let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-            bricks[c][r].x = brickX;
-            bricks[c][r].y = brickY;
-            ctx.beginPath();
-            ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = "rgb(170, 51, 1)";
-            ctx.fill();
-            ctx.closePath();
+            if(bricks[c][r].exist){
+                let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle = "rgb(170, 51, 1)";
+                ctx.fill();
+                ctx.closePath();
+            }
         }
     }
 
@@ -173,7 +186,21 @@ function keyUpHandler(e) {
         leftPressed = false;
     }
 }
+function collisionDetection() {
+    for(var c=0; c<brickColumnCount; c++) {
+        for(var r=0; r<brickRowCount; r++) {
+            var b = bricks[c][r];
+            if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight && b.exist) {
+                b.exist = false;
+                moveY = -moveY; 
+                counter+=10;
+                
+                ballCurrentColor = getRandElem(ballUnlockColors);
+                
+            }
+        }
+    }
+}
+let interval = setInterval(draw, 15 );
 
 
-
-setInterval(draw, 15 );

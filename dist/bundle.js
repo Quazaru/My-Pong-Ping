@@ -1,1 +1,419 @@
-!function(e){function t(t){for(var r,i,a=t[0],f=t[1],c=t[2],s=0,h=[];s<a.length;s++)i=a[s],Object.prototype.hasOwnProperty.call(o,i)&&o[i]&&h.push(o[i][0]),o[i]=0;for(r in f)Object.prototype.hasOwnProperty.call(f,r)&&(e[r]=f[r]);for(u&&u(t);h.length;)h.shift()();return l.push.apply(l,c||[]),n()}function n(){for(var e,t=0;t<l.length;t++){for(var n=l[t],r=!0,a=1;a<n.length;a++){var f=n[a];0!==o[f]&&(r=!1)}r&&(l.splice(t--,1),e=i(i.s=n[0]))}return e}var r={},o={0:0},l=[];function i(t){if(r[t])return r[t].exports;var n=r[t]={i:t,l:!1,exports:{}};return e[t].call(n.exports,n,n.exports,i),n.l=!0,n.exports}i.m=e,i.c=r,i.d=function(e,t,n){i.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},i.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},i.t=function(e,t){if(1&t&&(e=i(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(i.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)i.d(n,r,function(t){return e[t]}.bind(null,r));return n},i.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return i.d(t,"a",t),t},i.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},i.p="";var a=window.webpackJsonp=window.webpackJsonp||[],f=a.push.bind(a);a.push=t,a=a.slice();for(var c=0;c<a.length;c++)t(a[c]);var u=f;l.push([121,1]),n()}({121:function(e,t,n){n(122),e.exports=n(308)},308:function(e,t,n){"use strict";n.r(t);n(309);for(var r=document.getElementById("myCanvas"),o=r.getContext("2d"),l=10,i=r.height/2,a=3,f=-3,c=(setInterval(v,15),!1),u=!1,s=(r.width-75)/2,h=0,d=[],p=0;p<10;p++){d[p]=[];for(var y=0;y<3;y++)d[p][y]={x:0,y:0}}var g=function(){var e,t,n,l,i,a;e=+r.width/4,t=+r.height/4,n=+r.width/2,l=+r.height/2,i="fill",a="rgba(0,0,0, 0.7)",o.beginPath(),o.rect(e,t,n,l),o.strokeStyle="red",a&&(o.fillStyle=a,o.strokeStyle=a),i?"fill"==i?o.fill():o.stroke():o.fill(),o.closePath(),o.beginPath(),o.font="50px poppins",o.textAlign="center",o.textBaseline="middle",o.fillStyle="#A0000F",o.fillText("You Died",+r.width/2,+r.height/2),o.font="20px poppins",o.fillStyle="orange",o.fillText("Your score: ".concat(h),+r.width/2,+(r.height/2+50)),o.closePath()},v=function e(){o.clearRect(0,0,r.width,r.height),b(),function(e){o.beginPath(),o.fillStyle="#fff",o.strokeStyle="black",o.arc(l,i,e,0,2*Math.PI),o.fill(),o.stroke(),o.closePath()}(10),o.beginPath(),o.rect(s,r.height-10,75,10),o.fillStyle="#0095DD",o.fill(),o.closePath(),(l+a>r.width-10||l+a<10)&&(a=-a),i<10?f=-f:i>r.height-10&&(l>s&&l<s+75+10?(f=-f,h+=10):(g(),f=a=0,clearInterval(setInterval(e,15)))),c&s<r.width-75?s+=5:u&s>0&&(s-=5),l+=a,i+=f},b=function(){for(var e=0;e<10;e++)for(var t=85*e+30,n=0;n<3;n++){var r=40*n+30;d[e][n].x=t,d[e][n].y=r,o.beginPath(),o.rect(t,r,75,30),o.fillStyle="rgb(170, 51, 1)",o.fill(),o.closePath()}};document.addEventListener("keydown",(function(e){39==e.keyCode?c=!0:37==e.keyCode&&(u=!0)})),document.addEventListener("keyup",(function(e){39==e.keyCode?c=!1:37==e.keyCode&&(u=!1)})),setInterval(v,15)},309:function(e,t,n){var r=n(310),o=n(311);"string"==typeof(o=o.__esModule?o.default:o)&&(o=[[e.i,o,""]]);var l={insert:"head",singleton:!1};r(o,l);e.exports=o.locals||{}},311:function(e,t,n){}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/
+/******/ 		return result;
+/******/ 	}
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"main": 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push([0,"vendors~main"]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "../node_modules/mini-css-extract-plugin/dist/loader.js?!../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/dist/cjs.js!./css/styles.scss":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ../node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-1!../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/dist/cjs.js!./css/styles.scss ***!
+  \*************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+    if(false) { var cssReload; }
+  
+
+/***/ }),
+
+/***/ "./css/styles.scss":
+/*!*************************!*\
+  !*** ./css/styles.scss ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-1!../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js!./styles.scss */ "../node_modules/mini-css-extract-plugin/dist/loader.js?!../node_modules/css-loader/dist/cjs.js!../node_modules/sass-loader/dist/cjs.js!./css/styles.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./js/script.js":
+/*!**********************!*\
+  !*** ./js/script.js ***!
+  \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/styles.scss */ "./css/styles.scss");
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_0__);
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var ballCurrentColor = '#fff';
+var ballUnlockColors = ['#FFC373', '#FFDC40', '#FF9200'];
+var radius = 10;
+var x = 0 + radius; //Координаты для шара
+
+var y = canvas.height / 2;
+var moveX = 3; //Скорость шара
+
+var moveY = -3;
+var spriteWidth = 30; //Ширина текстуры
+
+var spriteHeight = 30; //Высота текстуры
+
+var rightPressed = false;
+var leftPressed = false; //PADDLE
+
+var paddleHeight = 10;
+var paddleWidth = 75;
+var paddleX = (canvas.width - paddleWidth) / 2;
+var counter = 0; //BRICKS
+
+var brickRowCount = 3;
+var brickColumnCount = 10;
+var brickWidth = 75;
+var brickHeight = 30;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+var bricks = [];
+
+for (var c = 0; c < brickColumnCount; c++) {
+  bricks[c] = [];
+
+  for (var r = 0; r < brickRowCount; r++) {
+    bricks[c][r] = {
+      x: 0,
+      y: 0,
+      exist: true
+    };
+  }
+}
+
+var getRandElem = function getRandElem(arr) {
+  var rand = Math.floor(Math.random() * arr.length);
+  return arr[rand];
+};
+
+var drawRect = function drawRect(rectX, rectY, rectWidth, rectHeight, style, color) {
+  ctx.beginPath();
+  ctx.rect(rectX, rectY, rectWidth, rectHeight);
+  ctx.strokeStyle = 'red';
+
+  if (color) {
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+  }
+
+  if (style) {
+    style == 'fill' ? ctx.fill() : ctx.stroke();
+  } else {
+    ctx.fill();
+  }
+
+  ctx.closePath();
+};
+
+var drawCircumference = function drawCircumference(r, color) {
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  ctx.strokeStyle = 'black';
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.closePath();
+};
+
+var drawPaddle = function drawPaddle() {
+  ctx.beginPath();
+  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+  ctx.fillStyle = "#0095DD";
+  ctx.fill();
+  ctx.closePath();
+};
+
+var drawEndGameScreen = function drawEndGameScreen() {
+  drawRect(+(canvas.width / 4), +(canvas.height / 4), +(canvas.width / 2), +(canvas.height / 2), 'fill', 'rgba(0,0,0, 0.7)');
+  ctx.beginPath();
+  ctx.font = "50px poppins";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "#A0000F";
+  ctx.fillText("You Died", +(canvas.width / 2), +(canvas.height / 2));
+  ctx.font = '20px poppins';
+  ctx.fillStyle = "orange";
+  ctx.fillText("Your score: ".concat(counter), +(canvas.width / 2), +(canvas.height / 2 + 50));
+  ctx.closePath();
+  clearInterval(interval);
+};
+
+var draw = function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  collisionDetection();
+  console.log(ballCurrentColor);
+  drawCircumference(radius, ballCurrentColor); // рисуем шар
+
+  drawPaddle(); //рисуем ракетку
+
+  drawBricks(); //Условия для отскока от стен
+
+  if (x + moveX > canvas.width - radius || x + moveX < radius) {
+    moveX = -moveX;
+  }
+
+  if (y < radius) {
+    moveY = -moveY;
+  } else if (y > canvas.height - radius) {
+    if (x > paddleX && x < paddleX + paddleWidth + radius) {
+      moveY = -moveY;
+      counter += 1;
+    } else {
+      drawEndGameScreen();
+      moveY = moveX = 0;
+    }
+  }
+
+  if (rightPressed & paddleX < canvas.width - paddleWidth) {
+    paddleX += 5;
+  } else if (leftPressed & paddleX > 0) {
+    paddleX -= 5;
+  }
+
+  x += moveX;
+  y += moveY;
+};
+
+var drawBricks = function drawBricks() {
+  for (var _c = 0; _c < brickColumnCount; _c++) {
+    for (var _r = 0; _r < brickRowCount; _r++) {
+      if (bricks[_c][_r].exist) {
+        var brickX = _c * (brickWidth + brickPadding) + brickOffsetLeft;
+        var brickY = _r * (brickHeight + brickPadding) + brickOffsetTop;
+        bricks[_c][_r].x = brickX;
+        bricks[_c][_r].y = brickY;
+        ctx.beginPath();
+        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+        ctx.fillStyle = "rgb(170, 51, 1)";
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+  }
+};
+
+document.addEventListener("keydown", keyDownHandler);
+document.addEventListener("keyup", keyUpHandler);
+
+function keyDownHandler(e) {
+  if (e.keyCode == 39) {
+    rightPressed = true;
+  } else if (e.keyCode == 37) {
+    leftPressed = true;
+  }
+}
+
+function keyUpHandler(e) {
+  if (e.keyCode == 39) {
+    rightPressed = false;
+  } else if (e.keyCode == 37) {
+    leftPressed = false;
+  }
+}
+
+function collisionDetection() {
+  for (var c = 0; c < brickColumnCount; c++) {
+    for (var r = 0; r < brickRowCount; r++) {
+      var b = bricks[c][r];
+
+      if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight && b.exist) {
+        b.exist = false;
+        moveY = -moveY;
+        counter += 10;
+        ballCurrentColor = getRandElem(ballUnlockColors);
+      }
+    }
+  }
+}
+
+var interval = setInterval(draw, 15);
+
+/***/ }),
+
+/***/ 0:
+/*!********************************************!*\
+  !*** multi @babel/polyfill ./js/script.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! @babel/polyfill */"../node_modules/@babel/polyfill/lib/index.js");
+module.exports = __webpack_require__(/*! ./js/script.js */"./js/script.js");
+
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=bundle.js.map
