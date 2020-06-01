@@ -1,7 +1,8 @@
 import '../css/styles.scss';
 const restartBtn = document.querySelector('.restart');
-
-
+const keysControlBtn = document.querySelector('#keys-control-btn');
+const mouseControlBtn =  document.querySelector('#mouse-control-btn');
+const chooseControlMenu = document.querySelector(".choose-control");
 
 
 let canvas = document.getElementById("myCanvas");
@@ -53,6 +54,21 @@ const getRandElem = (arr) =>{
     return arr[rand];
 
 }
+const chooseControl = () => {
+    chooseControlMenu.style.display = 'block';
+    keysControlBtn.addEventListener('click', () => {
+        document.addEventListener("keydown", keyDownHandler);
+        document.addEventListener("keyup", keyUpHandler);
+        chooseControlMenu.style.display = 'none';
+    });
+    mouseControlBtn.addEventListener('click', () => {
+        canvas.addEventListener("mousemove", mouseMoveHandler);
+        chooseControlMenu.style.display = 'none';
+
+    });
+
+}
+chooseControl();
 
 const drawRect = (rectX, rectY, rectWidth, rectHeight, style, color) => {
     ctx.beginPath();
@@ -163,10 +179,10 @@ const draw = () => {
         }
     }
     if(rightPressed & paddleX < canvas.width-paddleWidth) {
-        paddleX += 5;
+        paddleX += 7;
     }
     else if(leftPressed & (paddleX > 0)) {
-        paddleX -= 5;
+        paddleX -= 7;
     }
     
     x+=moveX;
@@ -201,7 +217,7 @@ const drawBricks = () => {
 
 
 
-canvas.addEventListener("mousemove", mouseMoveHandler,)
+
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
@@ -212,7 +228,7 @@ function mouseMoveHandler(e){
     
     let relativeX = e.clientX - canvas.offsetLeft - paddleWidth/2;
 
-    console.log(canvas.offsetLeft);
+   
     if(relativeX > 0 && relativeX < canvas.width ){
         paddleX = relativeX;
        
