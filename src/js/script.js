@@ -96,9 +96,25 @@ const drawEndGameScreen = () =>{
     ctx.fillStyle = "orange";
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
-    clearInterval(interval)
+    clearInterval(interval);
 
 }
+const drawWinScreen = () =>{
+    drawRect(+(canvas.width / 4), +(canvas.height / 4),+(canvas.width / 2),+(canvas.height), 'fill','rgba(0,0,0, 0.7)'  );
+    ctx.beginPath();
+    ctx.font = "50px poppins";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#FFE773"; 
+    ctx.fillText("You WIN!",  +(canvas.width / 2)  , +(canvas.height/2));
+    ctx.font = '20px poppins'
+    ctx.fillStyle = "gold";
+    ctx.fillText('Congrats!',  +(canvas.width / 2)  , +(canvas.height/2 + 150));
+    ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
+    ctx.closePath();
+    clearInterval(interval);
+}
+
 
 const draw = () => {
     ctx.clearRect(0,0, canvas.width, canvas.height);
@@ -107,7 +123,7 @@ const draw = () => {
     drawCircumference(radius, ballCurrentColor); // рисуем шар
     drawPaddle();              //рисуем ракетку
     drawBricks();
-
+    
     //Условия для отскока от стен
     if(x + moveX > canvas.width-radius || x + moveX < radius) {
         moveX = -moveX;
@@ -117,7 +133,7 @@ const draw = () => {
     } else if(y  > canvas.height-radius) {
         if(x > paddleX  && x  < paddleX + paddleWidth + radius ) {
             moveY = -moveY;
-            counter+=1;
+            
         }
         else {
             drawEndGameScreen();
@@ -194,7 +210,9 @@ function collisionDetection() {
                 b.exist = false;
                 moveY = -moveY; 
                 counter+=10;
-                
+                if(counter == 10 * brickColumnCount * brickRowCount){
+                    drawWinScreen();
+                }
                 ballCurrentColor = getRandElem(ballUnlockColors);
                 
             }
