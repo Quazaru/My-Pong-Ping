@@ -106,7 +106,7 @@ const drawEndGameScreen = () =>{
     ctx.closePath();
     
     restartBtn.style.display = 'block';
-    
+    restartBtn.style.top = canvas.height/2 + 75 + 'px';
     cancelAnimationFrame(draw);
     
 }
@@ -124,6 +124,7 @@ const drawWinScreen = () =>{
     ctx.fillText('Congrats!',  +(canvas.width / 2)  , +(canvas.height/2 + 150));
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
+    restartBtn.style.top = canvas.height/2 + 75 + 'px';
     restartBtn.style.display = 'block';
     restartBtn.style.backgroundColor = '#FFE773';
     restartBtn.style.color = '#000';
@@ -144,12 +145,12 @@ const drawCounter = () => {
 
 const draw = () => {
     ctx.clearRect(0,0, canvas.width, canvas.height);
-    
+    collisionDetection();
     drawCircumference(radius, ballCurrentColor); // рисуем шар
     drawPaddle();              //рисуем ракетку
     drawBricks();
     drawCounter();
-    collisionDetection();
+    
 
     //Условия для отскока от стен
     if(x + moveX > canvas.width-radius || x + moveX < radius) {
@@ -157,32 +158,36 @@ const draw = () => {
     }
     if(y  < radius) {
         moveY = -moveY;
-    } else if(y  > canvas.height-radius) {
-        if(x > paddleX  && x  < paddleX + paddleWidth + radius ) {
-            moveY = -moveY;           
+    } else if(y  >  canvas.height - radius - paddleHeight) {
+        if(x > paddleX  &&  x < paddleX + paddleWidth  ) {
+            
+            moveY = -moveY;
+                      
         }
-        else {
+        else if (y  >  canvas.height - radius){
+            console.log('NOOs');
             drawEndGameScreen();
+
+
             moveY = moveX = 0;
+            
         }
-    }else if(counter == 10 * brickRowCount * brickColumnCount ){
-        requestAnimationFrame(draw);
-        drawWinScreen();
-    }else{
+    } else {
+
     if(rightPressed & paddleX < canvas.width-paddleWidth) {
         paddleX += 7;
     }
     else if(leftPressed & (paddleX > 0)) {
         paddleX -= 7;
     }
-    
+}
     x+=moveX;
     y+=moveY;
 
 
     requestAnimationFrame(draw);
-    
-}
+
+
 }
 
 const drawBricks = () => {
@@ -281,9 +286,6 @@ function collisionDetection() {
                 b.exist = false;
                 moveY = -moveY; 
                 counter+=10;
-                if(counter == 10 * brickColumnCount * brickRowCount){
-                    drawWinScreen();
-                }
                 ballCurrentColor = getRandElem(ballUnlockColors);
                 
             }
