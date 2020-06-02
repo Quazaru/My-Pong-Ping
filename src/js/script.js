@@ -100,15 +100,18 @@ const drawEndGameScreen = () =>{
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#BF3030"; 
     ctx.fillText("You Died",  +(canvas.width / 2)  , +(canvas.height/2));
-    ctx.font = '20px poppins'
+    ctx.font = '20px poppins';
     ctx.fillStyle = "#fff";
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
-    cancelAnimationFrame(draw);
+    
     restartBtn.style.display = 'block';
-
+    
+    cancelAnimationFrame(draw);
+    
 }
 const drawWinScreen = () =>{
+
     drawRect(+(canvas.width / 4), +(canvas.height / 4),+(canvas.width / 2),+(canvas.height), 'fill','rgba(0,0,0, 0.7)'  );
     ctx.beginPath();
     ctx.font = "50px poppins";
@@ -116,16 +119,19 @@ const drawWinScreen = () =>{
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#FFE773"; 
     ctx.fillText("You WIN!",  +(canvas.width / 2)  , +(canvas.height/2));
-    ctx.font = '20px poppins'
+    ctx.font = '20px poppins';
     ctx.fillStyle = "gold";
     ctx.fillText('Congrats!',  +(canvas.width / 2)  , +(canvas.height/2 + 150));
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
-    cancelAnimationFrame(draw);
     restartBtn.style.display = 'block';
     restartBtn.style.backgroundColor = '#FFE773';
     restartBtn.style.color = '#000';
-    restartBtn.style.fontWeight = '700'
+    restartBtn.style.fontWeight = '700';
+    moveX = moveY = 0;
+
+    cancelAnimationFrame(draw);
+
 }
 const drawCounter = () => {
     ctx.beginPath();
@@ -138,13 +144,12 @@ const drawCounter = () => {
 
 const draw = () => {
     ctx.clearRect(0,0, canvas.width, canvas.height);
-    collisionDetection();
-    console.log(ballCurrentColor);
+    
     drawCircumference(radius, ballCurrentColor); // рисуем шар
     drawPaddle();              //рисуем ракетку
     drawBricks();
     drawCounter();
-    
+    collisionDetection();
 
     //Условия для отскока от стен
     if(x + moveX > canvas.width-radius || x + moveX < radius) {
@@ -154,17 +159,16 @@ const draw = () => {
         moveY = -moveY;
     } else if(y  > canvas.height-radius) {
         if(x > paddleX  && x  < paddleX + paddleWidth + radius ) {
-            moveY = -moveY;
-            
+            moveY = -moveY;           
         }
         else {
             drawEndGameScreen();
             moveY = moveX = 0;
-            
-           
-
         }
-    }
+    }else if(counter == 10 * brickRowCount * brickColumnCount ){
+        requestAnimationFrame(draw);
+        drawWinScreen();
+    }else{
     if(rightPressed & paddleX < canvas.width-paddleWidth) {
         paddleX += 7;
     }
@@ -175,8 +179,10 @@ const draw = () => {
     x+=moveX;
     y+=moveY;
 
-    
+
     requestAnimationFrame(draw);
+    
+}
 }
 
 const drawBricks = () => {
