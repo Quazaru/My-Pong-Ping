@@ -54,22 +54,7 @@ const getRandElem = (arr) =>{
     return arr[rand];
 
 }
-const chooseControl = () => {
-    clearInterval(interval);
-    chooseControlMenu.style.display = 'block';
-    keysControlBtn.addEventListener('click', () => {
-        document.addEventListener("keydown", keyDownHandler);
-        document.addEventListener("keyup", keyUpHandler);
-        chooseControlMenu.style.display = 'none';
-        setInterval(draw, 1000/60);
-    });
-    mouseControlBtn.addEventListener('click', () => {
-        canvas.addEventListener("mousemove", mouseMoveHandler);
-        chooseControlMenu.style.display = 'none';
-        setInterval(draw, 1000/60);
-    });
 
-}
 
 
 const drawRect = (rectX, rectY, rectWidth, rectHeight, style, color) => {
@@ -119,7 +104,7 @@ const drawEndGameScreen = () =>{
     ctx.fillStyle = "#fff";
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
-    clearInterval(interval);
+    cancelAnimationFrame(draw);
     restartBtn.style.display = 'block';
 
 }
@@ -136,7 +121,7 @@ const drawWinScreen = () =>{
     ctx.fillText('Congrats!',  +(canvas.width / 2)  , +(canvas.height/2 + 150));
     ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
     ctx.closePath();
-    clearInterval(interval);
+    cancelAnimationFrame(draw);
     restartBtn.style.display = 'block';
     restartBtn.style.backgroundColor = '#FFE773';
     restartBtn.style.color = '#000';
@@ -191,7 +176,7 @@ const draw = () => {
     y+=moveY;
 
     
-    
+    requestAnimationFrame(draw);
 }
 
 const drawBricks = () => {
@@ -214,7 +199,27 @@ const drawBricks = () => {
     }
 
 }
+const chooseControl = () => {
+    if(localStorage.getItem('controlChoosen')){
+        
+        requestAnimationFrame(draw, canvas);
+    }else{
+    cancelAnimationFrame(draw);
+    chooseControlMenu.style.display = 'block';
+    keysControlBtn.addEventListener('click', () => {
+        document.addEventListener("keydown", keyDownHandler);
+        document.addEventListener("keyup", keyUpHandler);
+        chooseControlMenu.style.display = 'none';
+        requestAnimationFrame(draw, canvas);
+    });
+    mouseControlBtn.addEventListener('click', () => {
+        canvas.addEventListener("mousemove", mouseMoveHandler);
+        chooseControlMenu.style.display = 'none';
+        requestAnimationFrame(draw);
+    });
+}
 
+}
 
 
 
@@ -224,6 +229,7 @@ document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
 restartBtn.addEventListener('click', () => {
+    localStorage.setItem('controlChoosen', true);
     document.location.reload();
 })
 function mouseMoveHandler(e){
@@ -270,6 +276,8 @@ function collisionDetection() {
         }
     }
 }
-let interval = setInterval(draw, 1000/60 );
 chooseControl();
+
+
+
 
