@@ -201,8 +201,15 @@ const drawBricks = () => {
 }
 const chooseControl = () => {
     if(localStorage.getItem('controlChoosen')){
+        console.log(localStorage.getItem('controlType'))
+        if(localStorage.getItem('controlType') ==  'keys'){
+            document.addEventListener("keydown", keyDownHandler);
+            document.addEventListener("keyup", keyUpHandler);
+        }else if(localStorage.getItem('controlType') ==  'mouse'){
+            canvas.addEventListener("mousemove", mouseMoveHandler);
+        }
+        requestAnimationFrame(draw);
         
-        requestAnimationFrame(draw, canvas);
     }else{
     cancelAnimationFrame(draw);
     chooseControlMenu.style.display = 'block';
@@ -210,12 +217,14 @@ const chooseControl = () => {
         document.addEventListener("keydown", keyDownHandler);
         document.addEventListener("keyup", keyUpHandler);
         chooseControlMenu.style.display = 'none';
-        requestAnimationFrame(draw, canvas);
+        requestAnimationFrame(draw);
+        localStorage.setItem('controlType', 'keys');
     });
     mouseControlBtn.addEventListener('click', () => {
         canvas.addEventListener("mousemove", mouseMoveHandler);
         chooseControlMenu.style.display = 'none';
         requestAnimationFrame(draw);
+        localStorage.setItem('controlType', 'mouse');
     });
 }
 
@@ -225,8 +234,7 @@ const chooseControl = () => {
 
 
 
-document.addEventListener("keydown", keyDownHandler);
-document.addEventListener("keyup", keyUpHandler);
+
 
 restartBtn.addEventListener('click', () => {
     localStorage.setItem('controlChoosen', true);
