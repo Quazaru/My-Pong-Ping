@@ -55,20 +55,22 @@ const getRandElem = (arr) =>{
 
 }
 const chooseControl = () => {
+    clearInterval(interval);
     chooseControlMenu.style.display = 'block';
     keysControlBtn.addEventListener('click', () => {
         document.addEventListener("keydown", keyDownHandler);
         document.addEventListener("keyup", keyUpHandler);
         chooseControlMenu.style.display = 'none';
+        setInterval(draw, 1000/60);
     });
     mouseControlBtn.addEventListener('click', () => {
         canvas.addEventListener("mousemove", mouseMoveHandler);
         chooseControlMenu.style.display = 'none';
-
+        setInterval(draw, 1000/60);
     });
 
 }
-chooseControl();
+
 
 const drawRect = (rectX, rectY, rectWidth, rectHeight, style, color) => {
     ctx.beginPath();
@@ -268,6 +270,6 @@ function collisionDetection() {
         }
     }
 }
-let interval = setInterval(draw, 15 );
-
+let interval = setInterval(draw, 1000/60 );
+chooseControl();
 

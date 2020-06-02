@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./css/styles.scss"],"names":[],"mappings":"AAAA;AACA;AACA,YAAY;;AAEZ;AACA;AACA;AACA;AACA;AACA,iBAAiB","file":"main.css","sourcesContent":["* {\n  padding: 0;\n  margin: 0; }\n\ncanvas {\n  border: 1px solid #000;\n  background: #eee;\n  display: block;\n  margin: 0 auto;\n  color: #aa5b01; }\n"],"sourceRoot":""}
