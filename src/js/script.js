@@ -107,6 +107,7 @@ const drawEndGameScreen = () =>{
     
     restartBtn.style.display = 'block';
     restartBtn.style.top = canvas.height/2 + 75 + 'px';
+    canvas.removeEventListener("mousemove", mouseMoveHandler);
     cancelAnimationFrame(draw);
     
 }
