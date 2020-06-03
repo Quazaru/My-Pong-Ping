@@ -1,0 +1,118 @@
+html {
+  height: 100vh;
+}
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background: radial-gradient(circle at 50% 50%, #a0aac4, #c4d0ee);
+  height: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+.play {
+  position: absolute;
+  top: 20vh;
+  left: 50vw;
+  height: 150px;
+  width: 550px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background-color: #30364a;
+  padding: 50px 120px;
+  border-radius: 0 70px 0 70px;
+  -webkit-box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.281);
+          box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.281);
+}
+
+.play__btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+
+.play__btn a {
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  display: block;
+  font-size: 40px;
+  color: white;
+  text-decoration: none;
+  background-color: #d2a283;
+  padding: 20px 100px;
+  padding-bottom: 10px;
+  border-radius: 6px;
+  border-bottom: 3px solid #d2a283;
+  border-right: 2px solid #d2a283;
+  -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.281);
+          box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.281);
+  -webkit-box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.274);
+          box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.274);
+}
+
+.play__btn a:hover {
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+  border-bottom: 13px solid #d2a283;
+}
+
+.play h1 {
+  color: #fff;
+  text-align: center;
+}
+
+.version {
+  font-weight: 100;
+  font-size: 25px;
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+}
+
+.news {
+  font-size: 35px;
+  font-weight: 100;
+  position: absolute;
+  top: calc(20vh + 320px);
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  color: #fff;
+}
+
+.news__post {
+  margin-top: 20px;
+  border-bottom: 2px solid #fff;
+}
+
+.post__action {
+  text-align: center;
+  font-weight: normal;
+}
+
+.post__desription {
+  font-size: 20px;
+}
+
+.post__changes {
+  font-size: 25px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.post__changes li::before {
+  content: '\270E';
+  margin-right: 20px;
+}
+/*# sourceMappingURL=style.css.map */
