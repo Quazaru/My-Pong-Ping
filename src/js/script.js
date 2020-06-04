@@ -1,9 +1,10 @@
 import '../css/styles.scss';
-const restartBtn = document.querySelector('.restart');
+
 const keysControlBtn = document.querySelector('#keys-control-btn');
 const mouseControlBtn =  document.querySelector('#mouse-control-btn');
 const chooseControlMenu = document.querySelector(".choose-control");
-
+const gameOverMenu = document.querySelector('.game-over');
+let animationDraw;
 
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
@@ -31,6 +32,7 @@ let paddleWidth = 75;
 let paddleX = (canvas.width-paddleWidth)/2;
 
 let counter = 0;
+let exit = false;
 
 //BRICKS
 let brickRowCount = 3;
@@ -91,48 +93,44 @@ const  drawPaddle = ()  => {
     ctx.closePath();
 }
 
-const drawEndGameScreen = () =>{
+function drawEndGameScreen() {
     
-    drawRect(+(canvas.width / 4), +(canvas.height / 4),+(canvas.width / 2),+(canvas.height/2), 'fill','rgba(0,0,0, 0.7)'  );
-    ctx.beginPath();
-    ctx.font = "50px poppins";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillStyle = "#BF3030"; 
-    ctx.fillText("You Died",  +(canvas.width / 2)  , +(canvas.height/2));
-    ctx.font = '20px poppins';
-    ctx.fillStyle = "#fff";
-    ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
-    ctx.closePath();
-    
+    cancelAnimationFrame(animationDraw);
+    gameOverMenu.insertAdjacentHTML('afterbegin', `
+    <div class="game-over__menu">
+    <h3 class="game-over__header">You Died</h3>
+    <p class="game-score">Your score: ${counter}</p>
+    <button class="game-over__btn restart">Restart</button>
+    </div>
+    `);
+    const restartBtn = document.querySelector('.restart');
     restartBtn.style.display = 'block';
-    restartBtn.style.top = canvas.height/2 + 75 + 'px';
+restartBtn.addEventListener('click', () => {
+    location.reload();
+})
     canvas.removeEventListener("mousemove", mouseMoveHandler);
-    cancelAnimationFrame(draw);
+    
+    
     
 }
 const drawWinScreen = () =>{
 
-    drawRect(+(canvas.width / 4), +(canvas.height / 4),+(canvas.width / 2),+(canvas.height), 'fill','rgba(0,0,0, 0.7)'  );
-    ctx.beginPath();
-    ctx.font = "50px poppins";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillStyle = "#FFE773"; 
-    ctx.fillText("You WIN!",  +(canvas.width / 2)  , +(canvas.height/2));
-    ctx.font = '20px poppins';
-    ctx.fillStyle = "gold";
-    ctx.fillText('Congrats!',  +(canvas.width / 2)  , +(canvas.height/2 + 150));
-    ctx.fillText(`Your score: ${counter}`,  +(canvas.width / 2)  , +(canvas.height/2 + 50));
-    ctx.closePath();
-    restartBtn.style.top = canvas.height/2 + 75 + 'px';
+    exit = 1;
+    cancelAnimationFrame(animationDraw);
+    gameOverMenu.insertAdjacentHTML('afterbegin', `
+    <div class="game-over__menu  game-over__menu_win">
+    <h3 class="game-over__header">You Win</h3>
+    <p class="game-score">Your score: ${counter}</p>
+    <button class="game-over__btn restart">Try again</button>
+    <p class="game-score">Congrats</p>  
+    </div>
+    `);
+    const restartBtn = document.querySelector('.restart');
     restartBtn.style.display = 'block';
-    restartBtn.style.backgroundColor = '#FFE773';
-    restartBtn.style.color = '#000';
-    restartBtn.style.fontWeight = '700';
-    moveX = moveY = 0;
-
-    cancelAnimationFrame(draw);
+    restartBtn.addEventListener('click', () => {
+        location.reload();
+    })
+    canvas.removeEventListener("mousemove", mouseMoveHandler);
 
 }
 const drawCounter = () => {
@@ -144,13 +142,13 @@ const drawCounter = () => {
 
 }
 
-const draw = () => {
+function draw() {
     ctx.clearRect(0,0, canvas.width, canvas.height);
     collisionDetection();
     drawCircumference(radius, ballCurrentColor); // рисуем шар
     drawPaddle();              //рисуем ракетку
     drawBricks();
-    drawCounter();
+    drawWinScreen();
     
 
     //Условия для отскока от стен
@@ -166,9 +164,9 @@ const draw = () => {
                       
         }
         else if (y  >  canvas.height - radius){
-            console.log('NOOs');
+            window.cancelAnimationFrame(animationDraw);
             drawEndGameScreen();
-
+            exit = 1;
 
             moveY = moveX = 0;
             
@@ -185,8 +183,13 @@ const draw = () => {
     x+=moveX;
     y+=moveY;
 
-
-    requestAnimationFrame(draw);
+    drawCounter();
+    if(!exit){
+        requestAnimationFrame(draw);
+    }else{
+        cancelAnimationFrame(draw);
+        console.log('exit');
+    }
 
 
 }
@@ -220,7 +223,7 @@ const chooseControl = () => {
         }else if(localStorage.getItem('controlType') ==  'mouse'){
             canvas.addEventListener("mousemove", mouseMoveHandler);
         }
-        requestAnimationFrame(draw);
+        draw();
         
     }else{
     cancelAnimationFrame(draw);
@@ -229,13 +232,13 @@ const chooseControl = () => {
         document.addEventListener("keydown", keyDownHandler);
         document.addEventListener("keyup", keyUpHandler);
         chooseControlMenu.style.display = 'none';
-        requestAnimationFrame(draw);
+        draw();
         localStorage.setItem('controlType', 'keys');
     });
     mouseControlBtn.addEventListener('click', () => {
         canvas.addEventListener("mousemove", mouseMoveHandler);
         chooseControlMenu.style.display = 'none';
-        requestAnimationFrame(draw);
+        draw();
         localStorage.setItem('controlType', 'mouse');
     });
 }
@@ -248,10 +251,10 @@ const chooseControl = () => {
 
 
 
-restartBtn.addEventListener('click', () => {
-    localStorage.setItem('controlChoosen', true);
-    document.location.reload();
-})
+// restartBtn.addEventListener('click', () => {
+//     localStorage.setItem('controlChoosen', true);
+//     document.location.reload();
+// })
 function mouseMoveHandler(e){
     
     let relativeX = e.clientX - canvas.offsetLeft - paddleWidth/2;
