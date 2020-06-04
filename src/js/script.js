@@ -148,7 +148,7 @@ function draw() {
     drawCircumference(radius, ballCurrentColor); // рисуем шар
     drawPaddle();              //рисуем ракетку
     drawBricks();
-    drawWinScreen();
+
     
 
     //Условия для отскока от стен
